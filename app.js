@@ -1,59 +1,64 @@
-const fontFamilyItem = document.querySelectorAll(".dropdown-item");
-const boldButton = document.querySelector("#bold-btn");
-const italicButton = document.querySelector("#italic-btn");
-const unorderedlistButton = document.querySelector("#unorderedlist-btn");
-const orderedlistButton = document.querySelector("#orderedlist-btn");
-const quotesButton = document.querySelector("#quotes-btn");
-const monospaceButton = document.querySelector("#monospace-btn");
-const linkButton = document.querySelector("#link-btn");
-
-const setFontFamily = (fontName) => {
-  console.log(fontName);
-  document.execCommand("fontName", false, fontName);
-};
-
-boldButton.addEventListener("click", () => {
-  document.execCommand("bold");
-});
-
-italicButton.addEventListener("click", () => {
-  document.execCommand("italic");
-});
-
-quotesButton.addEventListener("click", () => {
-  const selectedText = document.getSelection();
-  document.execCommand(
-    "insertHTML",
-    false,
-    "<blockquote>" + selectedText + "</blockquote>"
-  );
-});
-
-unorderedlistButton.addEventListener("click", () => {
-  document.execCommand("insertUnorderedList");
-});
-
-orderedlistButton.addEventListener("click", () => {
-  document.execCommand("insertOrderedList");
-});
-
-linkButton.addEventListener("click", () => {
-  const url = prompt("Enter a URL:", "http://");
-  const selectedText = document.getSelection();
-
-  document.execCommand(
-    "insertHTML",
-    false,
-    `<a href=${url} target="_blank">${selectedText}</a>`
-  );
-});
-
 (function ($) {
+  const paper = $("#paper");
+  const render = $("#render");
   const $dropdownMenuButton = $("#dropdownMenuButton");
-  $(".font-family-entry").click(function (e) {
-    e.preventDefault();
-    const fontName = $(this).data("font-name");
+  const $fontFamilyEntry = $(".font-family-entry");
+  const $boldButton = $("#bold-btn");
+  const $italicButton = $("#italic-btn");
+  const $unorderedlistButton = $("#unorderedlist-btn");
+  const $orderedlistButton = $("#orderedlist-btn");
+  const $quotesButton = $("#quotes-btn");
+  const $linkButton = $("#link-btn");
+  const $formLink = $("#form-link");
+  const $buttonSave = $("#buttonSave");
+
+  const setFontFamily = (event, fontName) => {
+    event.preventDefault();
     $dropdownMenuButton.text(fontName);
-    setFontFamily(fontName);
+    document.execCommand("fontName", false, fontName);
+  };
+
+  const setBlockquote = () => {
+    const selectedText = document.getSelection();
+
+    document.execCommand(
+      "insertHTML",
+      false,
+      "<blockquote>" + selectedText + "</blockquote>"
+    );
+  };
+
+  const setLink = () => {
+    const url = prompt("Enter a link:", "http://");
+    const selectedText = document.getSelection();
+
+    document.execCommand(
+      "insertHTML",
+      false,
+      `<a href=${url} target="_blank">${selectedText}</a>`
+    );
+  };
+
+  const saveContent = () => {
+    render.html(`${paper.html()}`);
+  };
+
+  $fontFamilyEntry.click(function (event) {
+    const fontName = $(this).data("font-name");
+    setFontFamily(event, fontName);
   });
+
+  $boldButton.click(() => document.execCommand("bold"));
+
+  $italicButton.click(() => document.execCommand("italic"));
+
+  $unorderedlistButton.click(() => document.execCommand("insertUnorderedList"));
+
+  $orderedlistButton.click(() => document.execCommand("insertOrderedList"));
+
+  $quotesButton.click(() => setBlockquote());
+
+  $linkButton.click(() => setLink());
+
+  $buttonSave.click(() => saveContent());
 })(jQuery);
