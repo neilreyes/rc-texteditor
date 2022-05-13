@@ -1,0 +1,31 @@
+body {
+  background: #f0f1f3;
+}
+
+#paper {
+  border-radius: 5px;
+  margin-top: 1.5rem;
+  background: white;
+  height: 50vh;
+  font-size: 2rem;
+  box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+#paper:focus-visible {
+  outline: none;
+  box-shadow: 0 0 15px 5px #c5c5c5;
+}
+
+blockquote {
+  font-size: 1.25rem;
+  background: white;
+  padding: 1rem 2rem;
+  border-left: 4px solid orange;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  margin-right: 0.5rem;
+  box-shadow: 0 0 25px 1px rgba(0, 0, 0, 0.1);
+}
